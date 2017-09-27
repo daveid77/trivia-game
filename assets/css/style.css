@@ -193,6 +193,10 @@ footer .copyright a {
   body {
 
   }
+  h1 {
+    font-size: 40px;
+    line-height: 1;
+  }
   .mainwrapper {
 
   }
@@ -208,16 +212,9 @@ footer .copyright a {
   }
 }
 
-/* Width at 640px and below */
+/* Width at 540px and below */
 @media screen and (max-width: 540px) {
-  header img {
-    height: 50px;
-    padding: 24px 16px 0 0;
-    float: right;
-  }
-  header img:nth-of-type(2) {
-    display: none;
-  }
+
 }
 
 header {
