@@ -92,7 +92,7 @@ header img {
 #container {
   min-height: 100%;
   padding-bottom: 45px;
-  background: #909090 url('../images/_stevie_wonder.jpg');
+  background: #909090 url('../images/stevie_wonder.jpg');
   background-size: cover;
   overflow: auto;
 }
