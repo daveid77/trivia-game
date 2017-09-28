@@ -26,29 +26,79 @@
 
         <div class="sidebar maininner">
 
-          <h3>Time Remaining</h3>
+          <div class="countdown-wrapper">
 
-          <p>countdown</p>
+            <h3>Time Remaining:</h3>
+
+            <h4><span class="time-width">30</span> seconds</h4>
+
+          </div>
 
         </div>
 
         <div class="content maininner">
         
-          <div id="audio-toggle"></div>
+          <!-- <div id="audio-toggle"></div> -->
 
-          <h3>main content</h3>
+          <h2>Stevie wants you to know...</h2>
 
-          <p>main paragraph</p>
+          <div id="game-start">
+            <p class="note"><span class="bold">Before you start:</span> This will likely be a tough trivia game for most people.  Feel free to do web searches for answers in other browser tabs — but, remember, the clock will keep running and you only have 30 seconds to answer each question.</p>
+            
+            <div class="start-buttons">
+              <div>
+                <button class="start short-game" title="5 question version">Short Game</button>
+                <button class="start full-game" title="25 question version">Full Game</button>
+              </div>
+            </div>
 
-          <p>main paragraph</p>
+          </div>
 
-          <p>main paragraph</p>
+          <div id="game">
+            <h3 class="question">
+              Who in the world did this thing first before anybody else even imagined it?
+            </h3>
+            <div class="options-wrapper">
+              <button class="option">Joe Schmoe</button>
+              <button class="option">Jane Doe</button>
+              <button class="option">John Doe</button>
+              <button class="option">Exene Cervenka</button>
+            </div>
+            <div class="answer-wrapper">
+              <div id="answer-text">
+                <h4 class="answer-correct"><span class="bold">Correct!</span>  The answer is <span id="answer-name" class="bold nowrap">Exene Cervenka</span>.</h4>
+                <h4 class="answer-incorrect"><span class="bold">Sorry.</span>  The answer is <span id="answer-name" class="bold nowrap">Jane Doe</span>.</h4>
+              </div>
+              <div id="answer-image">
+                <img src="assets/images/chinese_workers.png" />
+              </div>
+            </div>
+          </div>
 
-          <img src="assets/images/songs-in-the-key-of-life.jpg" width="100">
+          <div id="game-over">
+            <h3 class="message">
+              All done! <span class="nowrap">Here's how you did.</span>
+            </h3>
+            <div class="results-wrapper">
+              <p class="bold">Correct Answers: <span id="correct-answers">14</span></p>
+              <p class="bold">Incorrect Answers: <span id="incorrect-answers">11</span></p>
+              <p class="bold">Unanswered Questions: <span id="correct-answers">1</span></p>
+            </div>
+            <div class="start-buttons">
+              <div>
+                <button class="start short-game" title="5 question version">Short Game</button>
+                <button class="start full-game" title="25 question version">Full Game</button>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <!-- <img src="assets/images/songs-in-the-key-of-life.jpg" width="100">
 
           <img src="assets/images/stevie_wonder.jpg" width="100">
 
-          <img src="assets/images/bruce_lee.jpg" width="100">
+          <img src="assets/images/bruce_lee.jpg" width="100"> -->
 
         </div>
 
