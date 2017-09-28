@@ -4,6 +4,31 @@
 
 $(document).ready(function() {
 
+  // Audio variables
+  var audioElem = $('.audio');
+    console.log(audioElem);
+  var audio = new Audio('assets/audio/StevieWonder_BlackMan.mp3');
+  audio.volume = 0.4;
+  audio.loop = true;
+  audio.mute = true; 
+
+  // Controls background audio after and during new games
+  function audioControl() {
+    if (audio.mute === true) {
+      audio.play();
+      $('#audio-toggle').show();
+      $('.audio').html('Pause Song &#9836;');
+      audio.mute = false;
+    } else  {
+      audio.pause();
+      $('.audio').html('Play Song &#9836;');
+      audio.mute = true;
+    }
+  }
+  $('.audio').on('click', function(){
+    audioControl();
+  });
+
   // shortens game by not using all 25 questions
   var questionsLimit = 10; 
 
@@ -170,6 +195,6 @@ $(document).ready(function() {
     }
   };
 
-  triviaGame.initialize();
+  // triviaGame.initialize();
 
 });

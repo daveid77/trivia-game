@@ -62,7 +62,7 @@ h4 {
 }
 p {
   padding: 10px 0;
-  line-height: 1.9;
+  line-height: 1.5;
 }
 ol {
   list-style-type: decimal;
@@ -205,6 +205,26 @@ button:active {
 }
 button:focus {
   outline:0;
+}
+#audio-toggle {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  right: 20px;
+}
+#audio-toggle.audio {
+  font-size: 14px;
+}
+.audio {
+  color: #ff0000;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: .8;
+}
+.audio:hover {
+  color: #df2921;
+  opacity: 1;
 }
 
 
