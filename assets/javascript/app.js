@@ -24,7 +24,7 @@ $(document).ready(function() {
   // Audio variables
   var audioElem = $('.audio');
   var audio = new Audio('assets/audio/StevieWonder_BlackMan.mp3');
-  audio.volume = 0.4;
+  audio.volume = 1;
   audio.loop = true;
   audio.mute = true; 
 
@@ -197,23 +197,15 @@ $(document).ready(function() {
     setQuestion: function(){
       questionCount++;
       outOfTime = false;
-        //console.log(questionCount);
       $('#options-wrapper').empty();
-        // console.log(questionCount);
       currentQuestion = triviaGame.questions['q' + questionCount].question;
-        // console.log(currentQuestion);
       currentOptions = triviaGame.questions['q' + questionCount].options;
-        // console.log(currentOptions);
       currentAnswer = triviaGame.questions['q' + questionCount].answer;
-        // console.log('currentAnswer: ' + currentAnswer);
       currentImage = triviaGame.questions['q' + questionCount].answerImg;
-        // console.log('currentImage: ' + currentImage);
       $('#question').text(currentQuestion);
       for (i = 0; i < currentOptions.length; i++) {
         var currentOption = triviaGame.questions['q' + questionCount].options[i];
-          // console.log(currentOption);
         var buttonId = '#button' + (i + 1);
-          // console.log(buttonId);
         var newButton = $('<button>').attr({
           id: buttonId,
           class: 'option-button',
@@ -224,7 +216,6 @@ $(document).ready(function() {
       run();
     },
     checkAnswer: function(chosenAnswer){
-        // console.log('chosenAnswer: ' + chosenAnswer);
       if (chosenAnswer === currentAnswer) {
         triviaGame.correctAnswer();
       } else {
@@ -234,19 +225,15 @@ $(document).ready(function() {
     correctAnswer: function(){
       correctAnswerTotal++;
       $('#options-wrapper, #answer-text, #answer-image').empty();
-        // console.log('you guessed right: ' + currentAnswer);
       var newResponse = $('<h4>').html('<span class="bold">Correct!</span>  The answer is <span id="answer-name" class="bold nowrap">' + currentAnswer + '</span>.');
       $('#answer-text').append(newResponse);
       var newImage = $('<img>').attr('src', currentImage);
       $('#answer-image').append(newImage);
-      // $('#question-wrapper').hide();
       $('#answer-wrapper').show();
-      // triviaGame.nextStep();
       setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     incorrectAnswer: function(){
       $('#options-wrapper, #answer-text, #answer-image').empty();
-        // console.log('you guessed wrong: ' + currentAnswer);
       if (outOfTime) {
         var timeUpResponse = $('<h3>').html('<span class="bold">Out of Time!</span>');
         $('#answer-text').prepend(timeUpResponse);
@@ -258,9 +245,7 @@ $(document).ready(function() {
       $('#answer-text').append(newResponse);
       var newImage = $('<img>').attr('src', currentImage);
       $('#answer-image').append(newImage);
-      // $('#question-wrapper').hide();
       $('#answer-wrapper').show();
-      // triviaGame.nextStep();
       setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
@@ -282,7 +267,6 @@ $(document).ready(function() {
       $('#game-over').show();
     },
   };
-  // triviaGame.startGame();
 
   // Timer functions
   function run() {
@@ -293,7 +277,6 @@ $(document).ready(function() {
     secondsCountdown--;
     $('.time-remaining').text(secondsCountdown);
     if (secondsCountdown === 0) {
-      // console.log('Time Up!');
       stop();
       outOfTime = true;
       triviaGame.incorrectAnswer(outOfTime);
@@ -308,23 +291,15 @@ $(document).ready(function() {
 
   // Click behaviors 
   $('.start').on('click', function() {
-    // var gameLength = $(this).attr('class');
-    //   console.log(gameLength);
     if ($(this).hasClass('short-game')) {
-        // console.log('short game');
       gameLength = shortGame;
     } else {
-        // console.log('full game');
-      // gameLength = triviaGame.questions.length;
       gameLength = Object.keys(triviaGame.questions).length;
-        // console.log('gameLength: ' + gameLength);
     }
     triviaGame.startGame();
   });
   $(document).on('click', '.option-button', function() {
-      // console.log('option-button');
     var clickOption = $(this).attr('data-option');
-      console.log(clickOption);
     stop();
     triviaGame.checkAnswer(clickOption);
   });
