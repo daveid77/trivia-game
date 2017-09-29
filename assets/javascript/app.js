@@ -5,9 +5,9 @@
 $(document).ready(function() {
 
   // First THREE values can be changed to control game behavior...  
-  var seconds = 30; // max time for each question to be answered
-  var shortGame = 5; // shortens game play by not using all 25 questions
-  var answerTime = 4; // number of seconds #answer-wrapper displays
+  var seconds = 3; // max time for each question to be answered
+  var shortGame = 3; // shortens game play by not using all 25 questions
+  var answerTime = 3; // number of seconds #answer-wrapper displays
   var gameLength;
   var gameLengthFull;
   var randNumArr = [];
@@ -198,7 +198,7 @@ $(document).ready(function() {
       triviaGame.setQuestion();
     },
     setQuestion: function(){
-        // console.log(questionCount);
+        console.log('questionCount: ' + questionCount);
       outOfTime = false;
       $('#options-wrapper').empty();
       currentQuestion = triviaGame.questions['q' + randNumArr[questionCount]].question;
@@ -253,7 +253,7 @@ $(document).ready(function() {
       setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
-        console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' / randNumArr[questionCount]: ' + randNumArr[questionCount] + ' / correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
+        // console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' / randNumArr[questionCount]: ' + randNumArr[questionCount] + ' / correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
       $('#answer-wrapper').hide();
       if (questionCount === gameLength) {
         triviaGame.endGame();

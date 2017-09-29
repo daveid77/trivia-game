@@ -14,6 +14,14 @@ Week Three Homework Part 1: [Javascript Assignment 2](http://ucb.bootcampcontent
   * Max time for each question to be answered
   * "Short Game" option to set number of questions. 
   * Answer screen display time.
+* Ghost in the machine:
+  * Error thrown at different points in full game version.  Happens after differing numbers of questions and differing questions themselves.  Does not appear to be related to typo in data object or script because it runs so many times successfully.  Appears to be related to setTimeout and setInterval running asynchronously so many times. Unable to resolve issue.
+
+      ```
+      app.js:204 Uncaught TypeError: Cannot read property 'question' of undefined
+        at Object.setQuestion (app.js:204)
+        at nextStep (app.js:262)
+      ```
 * Nice to have but not developed:
   * Randomize order of four answer options for each question. Currently, they always appear in the same order every time game is played. 
 * As always, feedback appreciated. 
