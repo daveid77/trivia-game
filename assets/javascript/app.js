@@ -5,9 +5,9 @@
 $(document).ready(function() {
 
   // First THREE values can be changed to control game behavior...  
-  var seconds = 20; // max time for each question to be answered
-  var shortGame = 5; // shortens game play by not using all 25 questions
-  var answerTime = 4; // number of seconds #answer-wrapper displays
+  var seconds = 3; // max time for each question to be answered
+  var shortGame = 3; // shortens game play by not using all 25 questions
+  var answerTime = 3; // number of seconds #answer-wrapper displays
   var gameLength;
   var gameLengthFull;
   var randNumArr = [];
@@ -199,7 +199,7 @@ $(document).ready(function() {
       triviaGame.setQuestion();
     },
     setQuestion: function(){
-        console.log('questionCount: ' + questionCount);
+        console.log(questionCount);
       outOfTime = false;
       $('#options-wrapper').empty();
       currentQuestion = triviaGame.questions['q' + randNumArr[questionCount]].question;
@@ -277,9 +277,10 @@ $(document).ready(function() {
   // Generate Random Non-Repeating Number within Object Length Range
   function randNumGenerator() {
     // define number array
-    for (var i = 0; i < gameLengthFull; i++) {
-      randNumArr[i] = i;
+    for (var i = 1; i <= gameLengthFull; i++) {
+      randNumArr[i] = i; 
     }
+      randNumArr.shift();
     // randomize array
     randNumArr.sort(function () {
       return Math.random() - 0.5;

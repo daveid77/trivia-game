@@ -6,14 +6,6 @@ Week Three Homework Part 1: [Javascript Assignment 2](http://ucb.bootcampcontent
 
 ## Misc Notes
 
-* Ghost in the machine:
-  * Error thrown at different points in full game version.  Happens after differing numbers of questions and differing questions themselves.  Tends to happen between 13 and 19 questions into game.  Does not appear to be related to typo in data object or script because it does all run multiple times successfully.  Appears to be related to `setTimeout` and `setInterval` running asynchronously. Tried `clearTimeout()` after `setTimeout` run, but that didn't help.  Unable to resolve issue.
-
-      ```
-      app.js:204 Uncaught TypeError: Cannot read property 'question' of undefined
-        at Object.setQuestion (app.js:204)
-        at nextStep (app.js:262)
-      ```
 * Among game enhancements beyond [demo game](http://ucb.bootcampcontent.com/UCB-Coding-Bootcamp/09-11-2017-UCB-Class-Repository-FSF-FT/raw/master/03-week/homework/part-1/advanced-trivia-demo.mov):
   * **Second "Short Game"** start button offers option with fewer questions and quicker game play (since full game play includes 25 trivia questions, which is a lot for testing and/or reviewing game).
   * **Randomized non-repeating question sequence**, so that questions do not appear in the same order as they are structured in the triviaGame object every time a new game is started.  Since there are so many questions to choose from, this variance keeps replays more fresh. (Short games select from full list of 25 questions.)
