@@ -5,9 +5,9 @@
 $(document).ready(function() {
 
   // First THREE values can be changed to control game behavior...  
-  var seconds = 3; // max time for each question to be answered
-  var shortGame = 3; // shortens game play by not using all 25 questions
-  var answerTime = 3; // number of seconds #answer-wrapper displays
+  var seconds = 20; // max time for each question to be answered
+  var shortGame = 5; // shortens game play by not using all 25 questions
+  var answerTime = 4; // number of seconds #answer-wrapper displays
   var gameLength;
   var gameLengthFull;
   var randNumArr = [];
@@ -16,6 +16,7 @@ $(document).ready(function() {
   var currentAnswer;
   var currentImage;
   var intervalId;
+  var timeoutId;
   var secondsCountdown;
   var outOfTime;
   var questionCount;
@@ -234,7 +235,7 @@ $(document).ready(function() {
       var newImage = $('<img>').attr('src', currentImage);
       $('#answer-image').append(newImage);
       $('#answer-wrapper').show();
-      setTimeout(triviaGame.nextStep, 1000 * answerTime);
+      timeoutId = setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     incorrectAnswer: function(){
       $('#options-wrapper, #answer-text, #answer-image').empty();
@@ -250,9 +251,10 @@ $(document).ready(function() {
       var newImage = $('<img>').attr('src', currentImage);
       $('#answer-image').append(newImage);
       $('#answer-wrapper').show();
-      setTimeout(triviaGame.nextStep, 1000 * answerTime);
+      timeoutId = setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
+      clearTimeout(timeoutId);
         // console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' / randNumArr[questionCount]: ' + randNumArr[questionCount] + ' / correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
       $('#answer-wrapper').hide();
       if (questionCount === gameLength) {
