@@ -13,8 +13,8 @@ Week Three Homework Part 1: [Javascript Assignment 2](http://ucb.bootcampcontent
   * Max time for each question to be answered
   * "Short Game" option to set number of questions. 
   * Answer screen display time.
-* Not implemented but conceived:
-  * Randomize question order, so that they do not pull from triviaGame object in the same sequence every time new game started. (Would apply to short and full games.)
+* Would have been nice to have, but not developed:
+  * Randomize question order, so that they do not pull from triviaGame object in the same sequence every time new game started.  Since there are so many questions to choose from, this would keep replays more fresh. (Would apply to short and full games.)
 * As always, feedback appreciated. 
 
 ## Author

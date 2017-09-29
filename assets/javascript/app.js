@@ -5,9 +5,9 @@
 $(document).ready(function() {
 
   // First THREE values can be changed to control game behavior...  
-  var seconds = 5; // max time for each question to be answered
+  var seconds = 3; // max time for each question to be answered
   var shortGame = 5; // shortens game play by not using all 25 questions
-  var answerTime = 5; // number of seconds #answer-wrapper displays
+  var answerTime = 2; // number of seconds #answer-wrapper displays
   var gameLength;
   var currentQuestion;
   var currentOptions;
@@ -15,11 +15,11 @@ $(document).ready(function() {
   var currentImage;
   var intervalId;
   var secondsCountdown;
-  var outOfTime = false;
-  var questionCount = 0;
-  var answeredCorrectly = 0;
-  var answeredIncorrectly = 0;
-  var unAnswered = 0;
+  var outOfTime;
+  var questionCount;
+  var correctAnswerTotal;
+  var incorrectAnswerTotal;
+  var unAnswerTotal;
 
   // Audio variables
   var audioElem = $('.audio');
@@ -31,158 +31,163 @@ $(document).ready(function() {
   var triviaGame = {
     questions: {
       q1: {
-        question: 'Who was the first man to die for the American flag? Crispus Attucks', 
+        question: 'Who was the first man to die for the American flag?', 
         options: ['Paul Revere', 'Crispus Attucks', 'Benjamin Franklin', 'Amerigo Vespucci'], 
         answer: 'Crispus Attucks', 
         answerImg: 'assets/images/crispus_attucks.jpg'
       }, 
       q2: {
-        question: 'Who were the first people on the ground in America? Native Americans', 
+        question: 'Who were the first people on the ground in America?', 
         options: ['Vikings', 'Spanish', 'Native Americans', 'English'], 
         answer: 'Native Americans', 
         answerImg: 'assets/images/native_americans.jpg'
       }, 
       q3: {
-        question: 'Who was the guide on the first Columbus trip? Pedro Alonso Niño', 
+        question: 'Who was the guide on the first Columbus trip?', 
         options: ['Cristobal Colon', 'Juan de la Cosa', 'Diego de Arana', 'Pedro Alonso Niño'], 
         answer: 'Pedro Alonso Niño', 
         answerImg: 'assets/images/pedro_alonso_nino.jpg'
       }, 
       q4: {
-        question: 'Who laid the first railroad tracks connecting the United States? Chinese workers', 
+        question: 'Who laid the first railroad tracks connecting the United States?', 
         options: ['Italian workers', 'French workers', 'Canadian workers', 'Chinese workers'], 
         answer: 'Chinese workers', 
         answerImg: 'assets/images/chinese_workers.png'
       }, 
       q5: {
-        question: 'Who was the first heart surgeon? Dr. Daniel Hale Williams', 
+        question: 'Who was the first heart surgeon?', 
         options: ['Dr. Daniel Hale Williams', 'Dr. Strangelove', 'Dr. Peter Leavitt', 'Dr. Benjamin Spock'], 
         answer: 'Dr. Daniel Hale Williams', 
         answerImg: 'assets/images/daniel_hale_williams.jpg'
       }, 
       q6: {
-        question: 'Who showed the pilgrims at Plymouth the secrets of survival in the New World? Squanto', 
+        question: 'Who showed the pilgrims at Plymouth the secrets of survival in the New World?', 
         options: ['John Horse', 'Squanto', 'Anakin', 'Sitting Bull'], 
         answer: 'Squanto', 
         answerImg: 'assets/images/squanto.png'
       }, 
       q7: {
-        question: 'Who was a California leader fighting for farm workers\' dignity, respect, and labor rights? Cesar Chavez', 
+        question: 'Who was a California leader fighting for farm workers\' dignity, respect, and labor rights?', 
         options: ['Octaviano Larrazolo', 'Junipero Serra', 'Cesar Chavez', 'José Martí'], 
         answer: 'Cesar Chavez', 
         answerImg: 'assets/images/cesar_chavez.jpg'
       }, 
       q8: {
-        question: 'Who was the inventor of incandescent light bulb? Thomas Edison', 
+        question: 'Who was the inventor of incandescent light bulb?', 
         options: ['Eli Whitney', 'Thomas Edison', 'Ralph Waldo Emerson', 'Charles Goodyear'], 
         answer: 'Thomas Edison', 
         answerImg: 'assets/images/thomas_edison.jpg'
       }, 
       q9: {
-        question: 'Who helped design the nation\'s capitol, created the first clock in America, and wrote almanacs? Benjamin Banneker', 
+        question: 'Who helped design the nation\'s capitol, created the first clock in America, and wrote almanacs?', 
         options: ['Benjamin Banneker', 'Nicolas Norton', 'Jared James', 'Raymond Reed'], 
         answer: 'Benjamin Banneker', 
         answerImg: 'assets/images/benjamin_banneker.png'
       }, 
       q10: {
-        question: 'Who was the heroine that helped scout the Lewis and Clark expedition? Sacagawea', 
+        question: 'Who was the heroine that helped scout the Lewis and Clark expedition?', 
         options: ['Black Hawk', 'Crazy Horse', 'Sacagawea', 'Cochise',], 
         answer: 'Sacagawea', 
         answerImg: 'assets/images/sacagawea.jpg'
       }, 
       q11: {
-        question: 'Who was a primary pioneer of martial arts in America? Bruce Lee', 
+        question: 'Who was a primary pioneer of martial arts in America?', 
         options: ['Joe Lewis', 'Jet Li', 'Chuck Norris', 'Bruce Lee'], 
         answer: 'Bruce Lee', 
         answerImg: 'assets/images/bruce_lee.jpg'
       }, 
       q12: {
-        question: 'Who signed the Emancipation Proclamation, freeing more than 3 million U.S. slaves? Abraham Lincoln', 
+        question: 'Who signed the Emancipation Proclamation, freeing more than 3 million U.S. slaves?', 
         options: ['James Garfield', 'Abraham Lincoln', 'William McKinley', 'Andrew Jackson'], 
         answer: 'Abraham Lincoln', 
         answerImg: 'assets/images/abraham_lincoln.jpg'
       }, 
       q13: {
-        question: 'Who was once widely recognized as first man to set foot on the North Pole? Matthew Henson', 
+        question: 'Who was once widely recognized as first man to set foot on the North Pole?', 
         options: ['William Edward Parry', 'Hjalmar Johansen', 'Matthew Henson', 'Richard Byrd'], 
         answer: 'Matthew Henson', 
         answerImg: 'assets/images/matthew_henson.jpg'
       }, 
       q14: {
-        question: 'Who was a soldier of Company G and won high honors in World War I? Sing Lee', 
+        question: 'Who was a soldier of Company G and won high honors in World War I?', 
         options: ['Sing Lee', 'Raoul Wallenberg', 'Oskar Schindler', 'Douglas Bader'], 
         answer: 'Sing Lee', 
         answerImg: 'assets/images/sing_lee_company_g.jpg'
       }, 
       q15: {
-        question: 'Who created processes for storage of blood plasma and was the director of the Red Cross blood bank? Dr. Charles Drew', 
+        question: 'Who created processes for storage of blood plasma and was the director of the Red Cross blood bank?', 
         options: ['Dr. Ian Frazer', 'Dr. Carl Jung', 'Dr. René Laennec', 'Dr. Charles Drew'], 
         answer: 'Dr. Charles Drew', 
         answerImg: 'assets/images/charles_drew.jpg'
       }, 
       q16: {
-        question: 'Who was a famous educator and semanticist who made contributions to education in America? Hayakawa', 
+        question: 'Who was a famous educator and semanticist who made contributions to education in America?', 
         options: ['Daniel Inouye', 'Mako Iwamatsu', 'Saburo Muraoka', 'Hayakawa'], 
         answer: 'Hayakawa', 
         answerImg: 'assets/images/hayakawa.jpg'
       }, 
       q17: {
-        question: 'Who invented the world\'s first stop light and gas mask? Garrett Morgan', 
+        question: 'Who invented the world\'s first stop light and gas mask?', 
         options: ['Fritz Haber', 'Garrett Morgan', 'Robert Oppenheimer', 'Jacques Cousteau'], 
         answer: 'Garrett Morgan', 
         answerImg: 'assets/images/garrett_morgan.gif'
       }, 
       q18: {
-        question: 'Who was a surgeon that pioneered neurosurgery? Harvey William Cushing', 
+        question: 'Who was a surgeon that pioneered neurosurgery?', 
         options: ['Harvey William Cushing', 'Joseph Lister', 'Thomas Starzl', 'Christiaan Barnard'], 
         answer: 'Harvey William Cushing', 
         answerImg: 'assets/images/harvey_williams_cushing.jpg'
       }, 
       q19: {
-        question: 'Who was the hero that helped establish the league of Iroquois? Hiawatha', 
+        question: 'Who was the hero that helped establish the league of Iroquois?', 
         options: ['Hiawatha', 'Chief Joseph', 'Black Elk', 'Chief Seattle'], 
         answer: 'Hiawatha', 
         answerImg: 'assets/images/hiawatha.jpg'
       }, 
       q20: {
-        question: 'Who was the leader of the first macrobiotic center in America? Michio Kushi', 
+        question: 'Who was the leader of the first macrobiotic center in America?', 
         options: ['Vera Richter', 'Frances Moore Lappé', 'Michio Kushi', 'Robert Atkins'], 
         answer: 'Michio Kushi', 
         answerImg: 'assets/images/michio-kushi.jpg'
       }, 
       q21: {
-        question: 'Who founded of the city of Chicago in 1772? Jean Baptiste', 
+        question: 'Who founded of the city of Chicago in 1772?', 
         options: ['Viceroy Bucareli', 'Sam Houston', 'Jean Baptiste', 'William Sherman'], 
         answer: 'Jean Baptiste', 
         answerImg: 'assets/images/jean_baptiste_point_du_sable.jpg'
       }, 
       q22: {
-        question: 'Who was one of the organizers of the American Indian Movement? Dennis Banks', 
+        question: 'Who was one of the organizers of the American Indian Movement?', 
         options: ['Dennis Banks', 'Huey P. Newton', 'Felix Longoria', 'Angela Davis'], 
         answer: 'Dennis Banks', 
         answerImg: 'assets/images/dennis_banks.jpg'
       }, 
       q23: {
-        question: 'Who was the Jewish financier who raised funds to sponsor Christopher Columbus\' voyage to America? Luis de Santángel', 
+        question: 'Who was the Jewish financier who raised funds to sponsor Christopher Columbus\' voyage to America?', 
         options: ['Leif Eriksson', 'Luis de Santángel', 'Ferdinand Magellan', 'Ibn Battuta'], 
         answer: 'Luis de Santángel', 
         answerImg: 'assets/images/luis_de_santangel.jpg'
       }, 
       q24: {
-        question: 'Who lead slaves to freedom on the Underground Railroad? Harriet Tubman', 
+        question: 'Who lead slaves to freedom on the Underground Railroad?', 
         options: ['Solomon Northup', 'Thomas Jefferson', 'Harriet Tubman', 'Sojourner Truth'], 
         answer: 'Harriet Tubman', 
         answerImg: 'assets/images/harriet_ross_tubman.png'
       }, 
       q25: {
-        question: 'Who is known as the inventor of the fire extinguisher but actually invented the firefighting standpipe? T.J. Marshall', 
+        question: 'Who is known as the inventor of the fire extinguisher but actually invented the firefighting standpipe?', 
         options: ['T.J. Marshall', 'Tom Westman', 'Dan White', 'Jan Van der Heyden'], 
         answer: 'T.J. Marshall', 
         answerImg: 'assets/images/tjmarshall_standpipe.jpg'
       }
     },
-    startGame: function(){
-      $('#time-remaining').text(seconds);
+    startGame: function(){  
+      outOfTime = false;
+      questionCount = 0;
+      correctAnswerTotal = 0;
+      incorrectAnswerTotal = 0;
+      unAnswerTotal = 0;
+      $('.time-remaining').text(seconds);
       $('#game-start').hide();
       $('#game-over').hide();
       $('.sidebar').show();
@@ -227,6 +232,7 @@ $(document).ready(function() {
       }
     },
     correctAnswer: function(){
+      correctAnswerTotal++;
       $('#options-wrapper, #answer-text, #answer-image').empty();
         // console.log('you guessed right: ' + currentAnswer);
       var newResponse = $('<h4>').html('<span class="bold">Correct!</span>  The answer is <span id="answer-name" class="bold nowrap">' + currentAnswer + '</span>.');
@@ -241,32 +247,38 @@ $(document).ready(function() {
     incorrectAnswer: function(){
       $('#options-wrapper, #answer-text, #answer-image').empty();
         // console.log('you guessed wrong: ' + currentAnswer);
+      if (outOfTime) {
+        var timeUpResponse = $('<h3>').html('<span class="bold">Out of Time!</span>');
+        $('#answer-text').prepend(timeUpResponse);
+        unAnswerTotal++;
+      } else {
+        incorrectAnswerTotal++;
+      }
       var newResponse = $('<h4>').html('<span class="bold">Sorry.</span>  The answer is <span id="answer-name" class="bold nowrap">' + currentAnswer + '</span>.');
       $('#answer-text').append(newResponse);
       var newImage = $('<img>').attr('src', currentImage);
       $('#answer-image').append(newImage);
       // $('#question-wrapper').hide();
-      if (outOfTime) {
-        var timeUpResponse = $('<h3>').html('<span class="bold">Out of Time!</span>');
-      $('#answer-text').prepend(timeUpResponse);
-      }
       $('#answer-wrapper').show();
       // triviaGame.nextStep();
       setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
-        console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount);
+        console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
       $('#answer-wrapper').hide();
       if (questionCount === gameLength) {
         triviaGame.endGame();
       } else {
         triviaGame.setQuestion();
       }
-      $('#time-remaining').text(seconds);
+      $('.time-remaining').text(seconds);
     },
     endGame: function(){
       $('.sidebar').hide();
       $('#game').hide();
+      $('#correct-answers').text(correctAnswerTotal);
+      $('#incorrect-answers').text(incorrectAnswerTotal);
+      $('#unanswer-answers').text(unAnswerTotal);
       $('#game-over').show();
     },
   };
@@ -279,7 +291,7 @@ $(document).ready(function() {
   }
   function decrement() {
     secondsCountdown--;
-    $('#time-remaining').text(secondsCountdown);
+    $('.time-remaining').text(secondsCountdown);
     if (secondsCountdown === 0) {
       // console.log('Time Up!');
       stop();
@@ -290,6 +302,9 @@ $(document).ready(function() {
   function stop() {
     clearInterval(intervalId);
   }
+
+  // Sets time remaining figure in intro text on page
+  $('.time-remaining').text(seconds);
 
   // Click behaviors 
   $('.start').on('click', function() {
