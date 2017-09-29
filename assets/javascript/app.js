@@ -14,6 +14,7 @@ $(document).ready(function() {
   var currentAnswer;
   var currentImage;
   var intervalId;
+  var secondsCountdown;
   var outOfTime = false;
   var questionCount = 0;
   var answeredCorrectly = 0;
@@ -180,9 +181,6 @@ $(document).ready(function() {
         answerImg: 'assets/images/tjmarshall_standpipe.jpg'
       }
     },
-    // initialize: function() {
-    //   console.log(triviaGame);
-    // },
     startGame: function(){
       $('#time-remaining').text(seconds);
       $('#game-start').hide();
@@ -223,13 +221,13 @@ $(document).ready(function() {
     checkAnswer: function(chosenAnswer){
         // console.log('chosenAnswer: ' + chosenAnswer);
       if (chosenAnswer === currentAnswer) {
-        triviaGame.rightAnswer();
+        triviaGame.correctAnswer();
       } else {
-        triviaGame.wrongAnswer();
+        triviaGame.incorrectAnswer();
       }
     },
-    rightAnswer: function(){
-      $('#options-wrapper, #answer-text').empty();
+    correctAnswer: function(){
+      $('#options-wrapper, #answer-text, #answer-image').empty();
         // console.log('you guessed right: ' + currentAnswer);
       var newResponse = $('<h4>').html('<span class="bold">Correct!</span>  The answer is <span id="answer-name" class="bold nowrap">' + currentAnswer + '</span>.');
       $('#answer-text').append(newResponse);
@@ -237,10 +235,11 @@ $(document).ready(function() {
       $('#answer-image').append(newImage);
       // $('#question-wrapper').hide();
       $('#answer-wrapper').show();
-      triviaGame.nextStep();
+      // triviaGame.nextStep();
+      setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
-    wrongAnswer: function(){
-      $('#options-wrapper, #answer-text').empty();
+    incorrectAnswer: function(){
+      $('#options-wrapper, #answer-text, #answer-image').empty();
         // console.log('you guessed wrong: ' + currentAnswer);
       var newResponse = $('<h4>').html('<span class="bold">Sorry.</span>  The answer is <span id="answer-name" class="bold nowrap">' + currentAnswer + '</span>.');
       $('#answer-text').append(newResponse);
@@ -252,10 +251,17 @@ $(document).ready(function() {
       $('#answer-text').prepend(timeUpResponse);
       }
       $('#answer-wrapper').show();
-      triviaGame.nextStep();
+      // triviaGame.nextStep();
+      setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
         console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount);
+      $('#answer-wrapper').hide();
+      if (questionCount === gameLength) {
+        triviaGame.endGame();
+      } else {
+        triviaGame.setQuestion();
+      }
       $('#time-remaining').text(seconds);
     },
     endGame: function(){
@@ -268,16 +274,17 @@ $(document).ready(function() {
 
   // Timer functions
   function run() {
+    secondsCountdown = seconds; 
     intervalId = setInterval(decrement, 1000);
   }
   function decrement() {
-    seconds--;
-    $('#time-remaining').text(seconds);
-    if (seconds === 0) {
+    secondsCountdown--;
+    $('#time-remaining').text(secondsCountdown);
+    if (secondsCountdown === 0) {
       // console.log('Time Up!');
       stop();
       outOfTime = true;
-      triviaGame.wrongAnswer(outOfTime);
+      triviaGame.incorrectAnswer(outOfTime);
     }
   }
   function stop() {
