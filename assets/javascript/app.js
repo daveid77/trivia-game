@@ -9,6 +9,8 @@ $(document).ready(function() {
   var shortGame = 5; // shortens game play by not using all 25 questions
   var answerTime = 2; // number of seconds #answer-wrapper displays
   var gameLength;
+  var gameLengthFull;
+  var randNumArr = [];
   var currentQuestion;
   var currentOptions;
   var currentAnswer;
@@ -182,6 +184,7 @@ $(document).ready(function() {
       }
     },
     startGame: function(){  
+      randNumGenerator();
       outOfTime = false;
       questionCount = 0;
       correctAnswerTotal = 0;
@@ -195,16 +198,16 @@ $(document).ready(function() {
       triviaGame.setQuestion();
     },
     setQuestion: function(){
-      questionCount++;
+        // console.log(questionCount);
       outOfTime = false;
       $('#options-wrapper').empty();
-      currentQuestion = triviaGame.questions['q' + questionCount].question;
-      currentOptions = triviaGame.questions['q' + questionCount].options;
-      currentAnswer = triviaGame.questions['q' + questionCount].answer;
-      currentImage = triviaGame.questions['q' + questionCount].answerImg;
+      currentQuestion = triviaGame.questions['q' + randNumArr[questionCount]].question;
+      currentOptions = triviaGame.questions['q' + randNumArr[questionCount]].options;
+      currentAnswer = triviaGame.questions['q' + randNumArr[questionCount]].answer;
+      currentImage = triviaGame.questions['q' + randNumArr[questionCount]].answerImg;
       $('#question').text(currentQuestion);
       for (i = 0; i < currentOptions.length; i++) {
-        var currentOption = triviaGame.questions['q' + questionCount].options[i];
+        var currentOption = triviaGame.questions['q' + randNumArr[questionCount]].options[i];
         var buttonId = '#button' + (i + 1);
         var newButton = $('<button>').attr({
           id: buttonId,
@@ -213,6 +216,7 @@ $(document).ready(function() {
         }).text(currentOption);
         $('#options-wrapper').append(newButton);
       }
+      questionCount++;
       run();
     },
     checkAnswer: function(chosenAnswer){
@@ -249,7 +253,7 @@ $(document).ready(function() {
       setTimeout(triviaGame.nextStep, 1000 * answerTime);
     },
     nextStep: function(){
-        console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
+        console.log('nextStep --> gameLength: ' + gameLength + ' / questionCount: ' + questionCount + ' / randNumArr[questionCount]: ' + randNumArr[questionCount] + ' / correctAnswerTotal: ' + correctAnswerTotal + ' incorrectAnswerTotal: ' + incorrectAnswerTotal + ' unAnswerTotal: ' + unAnswerTotal);
       $('#answer-wrapper').hide();
       if (questionCount === gameLength) {
         triviaGame.endGame();
@@ -267,6 +271,18 @@ $(document).ready(function() {
       $('#game-over').show();
     },
   };
+
+  // Generate Random Non-Repeating Number within Object Length Range
+  function randNumGenerator() {
+    // define number array
+    for (var i = 0; i < gameLengthFull; i++) {
+      randNumArr[i] = i;
+    }
+    // randomize array
+    randNumArr.sort(function () {
+      return Math.random() - 0.5;
+    });
+  }
 
   // Timer functions
   function run() {
@@ -291,10 +307,11 @@ $(document).ready(function() {
 
   // Click behaviors 
   $('.start').on('click', function() {
+    gameLengthFull = Object.keys(triviaGame.questions).length;
     if ($(this).hasClass('short-game')) {
       gameLength = shortGame;
     } else {
-      gameLength = Object.keys(triviaGame.questions).length;
+      gameLength = gameLengthFull;
     }
     triviaGame.startGame();
   });

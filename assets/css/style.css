@@ -236,6 +236,15 @@ button:focus {
   color: #df2921;
   opacity: 1;
 }
+.album-thumb {
+  width: 100px;
+  margin: 15px 20px 0 0;
+  float: left;
+  border: 2px solid #000;
+}
+.album-desc {
+  text-align: left;
+}
 
 
 /* Width at 980px and below */
