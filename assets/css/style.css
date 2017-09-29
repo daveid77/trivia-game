@@ -154,6 +154,13 @@ footer .copyright a {
 .nowrap {
   white-space: nowrap;
 }
+/*hidden on start*/
+.sidebar, 
+#game, 
+#answer-wrapper, 
+#game-over {
+  display: none;
+}
 #game-start {
 
 }
