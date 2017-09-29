@@ -14,6 +14,8 @@ Week Three Homework Part 1: [Javascript Assignment 2](http://ucb.bootcampcontent
   * Max time for each question to be answered
   * "Short Game" option to set number of questions. 
   * Answer screen display time.
+* Nice to have but not developed:
+  * Randomize order of four answer options for each question. Currently, they always appear in the same order every time game is played. 
 * As always, feedback appreciated. 
 
 ## Author
