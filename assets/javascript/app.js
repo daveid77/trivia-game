@@ -4,25 +4,28 @@
 
 $(document).ready(function() {
 
+  // First THREE values can be changed to control game behavior...  
+  var seconds = 5; // max time for each question to be answered
+  var shortGame = 5; // shortens game play by not using all 25 questions
+  var answerTime = 5; // number of seconds #answer-wrapper displays
+  var gameLength;
+  var currentQuestion;
+  var currentOptions;
+  var currentAnswer;
+  var currentImage;
+  var intervalId;
+  var outOfTime = false;
+  var questionCount = 0;
+  var answeredCorrectly = 0;
+  var answeredIncorrectly = 0;
+  var unAnswered = 0;
+
   // Audio variables
   var audioElem = $('.audio');
   var audio = new Audio('assets/audio/StevieWonder_BlackMan.mp3');
   audio.volume = 0.4;
   audio.loop = true;
   audio.mute = true; 
-
-  var shortGame = 5; // shortens game by not using all 25 questions
-  var seconds = 5; // max time for each question to be answered
-  var gameLength;
-  var currentQuestion;
-  var currentOptions;
-  var currentAnswer;
-  var currentImage;
-  var outOfTime = false;
-  var questionCount = 0;
-  var answeredCorrectly = 0;
-  var answeredIncorrectly = 0;
-  var unAnswered = 0;
 
   var triviaGame = {
     questions: {
@@ -263,6 +266,7 @@ $(document).ready(function() {
   };
   // triviaGame.startGame();
 
+  // Timer functions
   function run() {
     intervalId = setInterval(decrement, 1000);
   }
@@ -270,7 +274,7 @@ $(document).ready(function() {
     seconds--;
     $('#time-remaining').text(seconds);
     if (seconds === 0) {
-      console.log('Time Up!');
+      // console.log('Time Up!');
       stop();
       outOfTime = true;
       triviaGame.wrongAnswer(outOfTime);
@@ -280,6 +284,7 @@ $(document).ready(function() {
     clearInterval(intervalId);
   }
 
+  // Click behaviors 
   $('.start').on('click', function() {
     // var gameLength = $(this).attr('class');
     //   console.log(gameLength);
@@ -294,7 +299,6 @@ $(document).ready(function() {
     }
     triviaGame.startGame();
   });
-
   $(document).on('click', '.option-button', function() {
       // console.log('option-button');
     var clickOption = $(this).attr('data-option');

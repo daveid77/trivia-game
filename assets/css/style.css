@@ -147,6 +147,9 @@ footer .copyright a {
 .bold {
   font-weight: bold;
 }
+.ital {
+  font-style: italic;
+}
 .note {
   font-size: 16px;
   line-height: 1.3;
