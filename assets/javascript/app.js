@@ -5,9 +5,9 @@
 $(document).ready(function() {
 
   // First THREE values can be changed to control game behavior...  
-  var seconds = 3; // max time for each question to be answered
+  var seconds = 30; // max time for each question to be answered
   var shortGame = 5; // shortens game play by not using all 25 questions
-  var answerTime = 2; // number of seconds #answer-wrapper displays
+  var answerTime = 4; // number of seconds #answer-wrapper displays
   var gameLength;
   var gameLengthFull;
   var randNumArr = [];
